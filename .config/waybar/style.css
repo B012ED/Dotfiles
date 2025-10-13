@@ -30,7 +30,7 @@ button {
 button:hover {
     background: inherit;
     color: @mauve;
-    border-top: 2px solid @mauve;
+    border-bottom: 2px solid @mauve;
     border-radius: 15px;
 }
 
@@ -46,7 +46,7 @@ button:hover {
 #workspaces button.active {
     background-color: rgba(0, 0, 0, 0.3);
     color: @sky;
-    border-top: 2px solid @sky;
+    border-bottom: 2px solid @sky;
     border-radius: 15px;
 }
 
@@ -67,6 +67,7 @@ button:hover {
 #network,
 #mode,
 #scratchpad {
+  padding: 0 12px;  
   margin-top: 3px;
   margin-bottom: 3px;
   margin-left: 3px;
@@ -75,45 +76,40 @@ button:hover {
 
 #clock {
     background-color:  rgba(0, 0, 0, 0.3);
-    border-bottom: 2px solid @mauve;
     color: @green;
     border-radius: 15px;
-    border: 6px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid @green;
     
 }
 
 #clock.date {
     background-color:  rgba(0, 0, 0, 0.3);
-    border-bottom: 2px solid @mauve;
     color: @sapphire;
     border-radius: 15px;
-    border: 7px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid @sapphire;
 }
 
 #temperature {
     background-color:  rgba(0, 0, 0, 0.3);
-    border-bottom: 2px solid @mauve;
     color: @lavender;
     border-radius: 15px;
-    border: 7px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid @lavender;
     
 }
 
 #pulseaudio {
     background-color:  rgba(0, 0, 0, 0.3);
-    border-bottom: 2px solid @mauve;
     color: @sky;
     border-radius: 15px;
-    border: 7px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid @sky;
     
 }
 
 #network {
     background-color:  rgba(0, 0, 0, 0.3);
-    border-bottom: 2px solid @mauve;
     color: @blue;
     border-radius: 15px;
-    border: 7px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid @blue
     
 }
 
