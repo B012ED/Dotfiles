@@ -1,32 +1,50 @@
 #!/bin/bash
-# Skrip: yusawall (FINAL V2)
-# Fungsi: Mengganti Wallpaper Pywal, menyimpan jalur, dan memastikan Waybar restart dengan andal.
+# Skrip: yusawall (FINAL V7 - BORDER PYWAL ASLI)
+# Fungsi: Mengganti Wallpaper Pywal, menyimpan jalur, dan memperbarui Waybar/Hyprland dengan skema warna Pywal asli.
 
 # --- Variabel Konfigurasi ---
 WALLPAPER_DIR="$HOME/.config/wallpapers"
-MONITOR_NAME="HDMI-A-1" # 🚨 PERIKSA & GANTI INI!
+MONITOR_NAME="HDMI-A-1" 
 LAST_WALLPAPER_FILE="$HOME/.cache/last_wallpaper.txt"
 
-# 1. Cek Argumen & Pywal (TETAP SAMA)
+# 1. Cek Argumen & Pywal
 if [ -z "$1" ]; then
     echo "Penggunaan: yusawall <nama_gambar>"; exit 1
 fi
 if ! command -v wal &> /dev/null; then
     echo "Error: pywal ('wal') tidak ditemukan. Pastikan Anda sudah menginstalnya."; exit 1
 fi
-
-# 2. Cek Jalur Wallpaper (TETAP SAMA)
 WALLPAPER_PATH="$WALLPAPER_DIR/$1" 
 if [ ! -f "$WALLPAPER_PATH" ]; then
     echo "Error: File wallpaper tidak ditemukan di: $WALLPAPER_PATH"; exit 1
 fi
 
-# 3. Aplikasikan Pywal dan Simpan Jalur (Kunci Persistensi)
+# 3. Aplikasikan Pywal dan Simpan Jalur
 echo "Menerapkan Pywal pada $WALLPAPER_PATH..."
 wal -i "$WALLPAPER_PATH"
 echo "$WALLPAPER_PATH" > "$LAST_WALLPAPER_FILE"
 
-# 4. PENGATURAN WALLPAPER DI HYPRLAND (TETAP SAMA)
+# =========================================================================
+# 4. INTEGRASI HYPRLAND BORDER (WARNA CAVA ASLI)
+# =========================================================================
+echo "Memperbarui warna border Hyprland (mengikuti warna CAVA/Pywal asli)..."
+
+# Ambil Warna Pywal yang digunakan sebelumnya:
+COLOR_CAVA_1=$(cat "$HOME/.cache/wal/colors" | sed -n '3p')   # color2 (Aksen gelap)
+COLOR_CAVA_2=$(cat "$HOME/.cache/wal/colors" | sed -n '5p')   # color4 (Aksen menengah)
+COLOR_INACTIVE=$(cat "$HOME/.cache/wal/colors" | sed -n '7p') # color6 (Abu-abu netral)
+
+# Border Aktif: Gradien dari color2 ke color4 dengan transparansi 'ee'
+hyprctl keyword general:col.active_border "rgba(${COLOR_CAVA_1}ee) rgba(${COLOR_CAVA_2}ee) 45deg"
+# Border Non-Aktif: Warna netral (color6) dengan transparansi 'aa'
+hyprctl keyword general:col.inactive_border "rgba(${COLOR_INACTIVE}aa)"
+
+# KUNCI: Memaksa Hyprland untuk memuat ulang konfigurasi agar perubahan border berlaku
+hyprctl reload
+echo "Warna border Hyprland di-update dan konfigurasi di-reload."
+# =========================================================================
+
+# 5. PENGATURAN WALLPAPER DI HYPRLAND
 echo "Mengatur wallpaper di Hyprland..."
 if ! pgrep -x hyprpaper > /dev/null; then
     echo "Hyprpaper daemon tidak berjalan, meluncurkan..."
@@ -37,16 +55,16 @@ hyprctl hyprpaper preload "$WALLPAPER_PATH"
 hyprctl hyprpaper wallpaper "$MONITOR_NAME,$WALLPAPER_PATH"
 echo "Wallpaper di monitor $MONITOR_NAME telah diubah."
 
-# 5. MUAT ULANG WAYBAR (Metode Paling Stabil)
+# 6. MUAT ULANG WAYBAR (Metode Paling Stabil)
 echo "Memuat ulang Waybar untuk menerapkan skema warna baru..."
 
 # Cek apakah Waybar sedang berjalan
 if pgrep -x waybar > /dev/null; then
     echo "Menghentikan Waybar yang sedang berjalan..."
-    # 5a. Kirim sinyal SIGTERM untuk Waybar agar berhenti secara teratur
+    # 6a. Kirim sinyal SIGTERM untuk Waybar agar berhenti secara teratur
     pkill -SIGTERM waybar
     
-    # 5b. JEDA WAJIB: Tunggu hingga Waybar benar-benar mati (maks 5 detik)
+    # 6b. JEDA WAJIB: Tunggu hingga Waybar benar-benar mati (maks 5 detik)
     TIMEOUT=5
     while pgrep -x waybar > /dev/null && [ $TIMEOUT -gt 0 ]; do
         sleep 0.5
@@ -58,7 +76,7 @@ if pgrep -x waybar > /dev/null; then
     fi
 fi
 
-# 5c. Luncurkan Waybar baru
+# 6c. Luncurkan Waybar baru
 waybar > /dev/null 2>&1 &
 echo "Waybar berhasil diluncurkan."
 

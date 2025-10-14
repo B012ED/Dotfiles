@@ -1,0 +1,62 @@
+## Configuration file for CAVA.
+
+[general]
+
+framerate = 60
+
+autosens = 1
+
+bars = 0
+bar_width = 2
+bar_spacing = 1
+
+lower_cutoff_freq = 50
+higher_cutoff_freq = 10000
+
+sleep_timer = 0
+
+
+[input]
+
+method = pulse
+# Monitor Sink USB Anda yang aktif
+source = alsa_output.usb-Generic_USB2.0_Device_20121120222017-01.analog-stereo.monitor
+
+
+[output]
+
+method = noncurses
+
+orientation = bottom
+
+channels = stereo
+mono_option = average
+reverse = 0
+
+show_idle_bar_heads = 1
+
+
+[color]
+
+# Mengaktifkan gradasi warna
+gradient = 1 
+# Background hitam dengan format yang benar
+background = '#000000' 
+# WARNA BAWAH (@color5: #77878E)
+gradient_color_1 = '#77878E' 
+# WARNA ATAS (@color2: #AD6652)
+gradient_color_2 = '#AD6652'
+
+
+[smoothing]
+
+noise_reduction = 77
+
+
+[eq]
+
+; 1 = 1 
+; 2 = 1
+; 3 = 1
+; 4 = 1
+; 5 = 1
