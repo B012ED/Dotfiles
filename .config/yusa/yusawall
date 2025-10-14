@@ -1,44 +1,58 @@
 #!/bin/bash
+# Skrip: yusawall (FINAL RESCUE & STABIL)
+# Fungsi: Mengganti Wallpaper Pywal, me-reload Waybar secara aman, dan menyimpan jalur untuk persistensi.
 
+# --- Variabel Konfigurasi ---
 WALLPAPER_DIR="$HOME/.config/wallpapers"
-MONITOR_NAME="HDMI-A-1" # PASTIKAN INI SAMA DENGAN NAMA MONITOR ANDA
+MONITOR_NAME="HDMI-A-1" # GANTI: Pastikan ini sama dengan nama monitor Anda di Hyprland/wayland
+LAST_WALLPAPER_FILE="$HOME/.cache/last_wallpaper.txt" # File untuk menyimpan jalur wallpaper terakhir
 
-
+# 1. Cek Argumen
 if [ -z "$1" ]; then
-    echo "Penggunaan: yusawall <nama_gambar>"; exit 1
+    echo "Penggunaan: yusawall <nama_gambar>"; 
+    echo "Contoh: yusawall galaxy.jpg"
+    exit 1
 fi
 if ! command -v wal &> /dev/null; then
     echo "Error: pywal ('wal') tidak ditemukan."; exit 1
 fi
 
-
+# 2. Cek Jalur
+# Menggunakan jalur absolut agar aman di Hyprland
 WALLPAPER_PATH="$WALLPAPER_DIR/$1" 
 if [ ! -f "$WALLPAPER_PATH" ]; then
     echo "Error: File wallpaper tidak ditemukan di: $WALLPAPER_PATH"; exit 1
 fi
 
-
+# 3. Aplikasikan Pywal dan Warna
 wal -i "$WALLPAPER_PATH"
 
+# PENTING UNTUK PERSISTENSI: Simpan jalur wallpaper
+# Jalur ini akan dibaca oleh Hyprland saat startup
+echo "$WALLPAPER_PATH" > "$LAST_WALLPAPER_FILE"
 
+# 4. PENGATURAN WALLPAPER DI HYPRLAND 
 echo "Mengatur wallpaper di Hyprland..."
 
-
+# Pastikan Hyprpaper Daemon berjalan atau diluncurkan jika belum ada
+# Biasanya lebih baik hyprpaper dijalankan di hyprland.conf, tapi ini cadangan
 if ! pgrep -x hyprpaper > /dev/null; then
     hyprctl dispatch exec hyprpaper &
     sleep 0.5
 fi
 
-
+# Gunakan perintah IPC Hyprpaper yang paling andal
 hyprctl hyprpaper preload "$WALLPAPER_PATH"
 hyprctl hyprpaper wallpaper "$MONITOR_NAME,$WALLPAPER_PATH"
 
-echo "Wallpaper di monitor $MONITOR_NAME telah diubah."
+echo "Wallpaper di monitor $MONITOR_NAME telah diubah dan disimpan."
 
-
+# 5. Muat Ulang Waybar
 echo "Memuat ulang Waybar untuk menerapkan skema warna..."
 
 pkill waybar 2>/dev/null
-sleep 1.5 # Jeda 1.5 detik untuk stabilitas Waybar
+sleep 1.5 # Jeda untuk stabilitas Waybar
 
 waybar > /dev/null 2>&1 &
+
+echo "Selesai."
