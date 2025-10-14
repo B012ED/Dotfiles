@@ -1,58 +1,60 @@
 #!/bin/bash
-# Skrip: yusawall (FINAL RESCUE & STABIL)
-# Fungsi: Mengganti Wallpaper Pywal, me-reload Waybar secara aman, dan menyimpan jalur untuk persistensi.
+# Skrip: yusawall (FINAL FULL SCRIPT)
+# Fungsi: Mengganti Wallpaper Pywal, menyimpan jalur untuk persistensi, dan me-reload Waybar secara aman.
+# STATUS: Siap untuk digunakan dengan Waybar dinamis.
 
 # --- Variabel Konfigurasi ---
 WALLPAPER_DIR="$HOME/.config/wallpapers"
-MONITOR_NAME="HDMI-A-1" # GANTI: Pastikan ini sama dengan nama monitor Anda di Hyprland/wayland
-LAST_WALLPAPER_FILE="$HOME/.cache/last_wallpaper.txt" # File untuk menyimpan jalur wallpaper terakhir
+MONITOR_NAME="HDMI-A-1" # 🚨 PERIKSA: Sesuaikan dengan nama monitor di 'yusaauto.conf' dan 'hyprctl monitors'
+LAST_WALLPAPER_FILE="$HOME/.cache/last_wallpaper.txt" # File cache untuk persistensi
 
-# 1. Cek Argumen
+# 1. Cek Argumen & Pywal
 if [ -z "$1" ]; then
     echo "Penggunaan: yusawall <nama_gambar>"; 
     echo "Contoh: yusawall galaxy.jpg"
     exit 1
 fi
 if ! command -v wal &> /dev/null; then
-    echo "Error: pywal ('wal') tidak ditemukan."; exit 1
+    echo "Error: pywal ('wal') tidak ditemukan. Pastikan Anda sudah menginstalnya."; exit 1
 fi
 
-# 2. Cek Jalur
-# Menggunakan jalur absolut agar aman di Hyprland
+# 2. Cek Jalur Wallpaper
 WALLPAPER_PATH="$WALLPAPER_DIR/$1" 
 if [ ! -f "$WALLPAPER_PATH" ]; then
     echo "Error: File wallpaper tidak ditemukan di: $WALLPAPER_PATH"; exit 1
 fi
 
-# 3. Aplikasikan Pywal dan Warna
+# 3. Aplikasikan Pywal dan Simpan Jalur (Kunci Persistensi)
+echo "Menerapkan Pywal pada $WALLPAPER_PATH..."
 wal -i "$WALLPAPER_PATH"
 
-# PENTING UNTUK PERSISTENSI: Simpan jalur wallpaper
-# Jalur ini akan dibaca oleh Hyprland saat startup
+# 🔑 BARIS PERSISTENSI: Simpan jalur absolut wallpaper ke file cache.
 echo "$WALLPAPER_PATH" > "$LAST_WALLPAPER_FILE"
+echo "Jalur wallpaper disimpan untuk persistensi."
 
 # 4. PENGATURAN WALLPAPER DI HYPRLAND 
 echo "Mengatur wallpaper di Hyprland..."
 
-# Pastikan Hyprpaper Daemon berjalan atau diluncurkan jika belum ada
-# Biasanya lebih baik hyprpaper dijalankan di hyprland.conf, tapi ini cadangan
+# Blok pengaman jika hyprpaper belum berjalan (biasanya sudah dijalankan oleh yusaauto.conf)
 if ! pgrep -x hyprpaper > /dev/null; then
+    echo "Hyprpaper daemon tidak berjalan, meluncurkan sebagai pengaman..."
     hyprctl dispatch exec hyprpaper &
-    sleep 0.5
+    sleep 1.0 
 fi
 
-# Gunakan perintah IPC Hyprpaper yang paling andal
+# Gunakan perintah IPC Hyprpaper
 hyprctl hyprpaper preload "$WALLPAPER_PATH"
 hyprctl hyprpaper wallpaper "$MONITOR_NAME,$WALLPAPER_PATH"
 
-echo "Wallpaper di monitor $MONITOR_NAME telah diubah dan disimpan."
+echo "Wallpaper di monitor $MONITOR_NAME telah diubah."
 
-# 5. Muat Ulang Waybar
-echo "Memuat ulang Waybar untuk menerapkan skema warna..."
+# 5. Muat Ulang Waybar (Metode Stabil)
+echo "Memuat ulang Waybar untuk menerapkan skema warna baru..."
 
 pkill waybar 2>/dev/null
-sleep 1.5 # Jeda untuk stabilitas Waybar
+sleep 1.5 # Jeda 1.5 detik untuk stabilitas Waybar 
 
+# Luncurkan Waybar baru
 waybar > /dev/null 2>&1 &
 
-echo "Selesai."
+echo "Proses penggantian wallpaper selesai. Periksa Waybar Anda!"
