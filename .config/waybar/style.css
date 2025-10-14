@@ -9,10 +9,8 @@
 }
 
 window#waybar {
-    /* Menggunakan warna background dinamis Pywal */
-    background: @background; 
-    transition-property: background-color;
-    transition-duration: 0.1s;
+    /* Menggunakan warna background dinamis Pywal, atau bisa diubah ke rgba(0,0,0,0) jika ingin transparan total */
+    background: @transfarans; 
     /* Menggunakan warna aksen Pywal (color4 seringkali cerah) */
     color: @color4; 
     border-radius: 15px;
@@ -33,7 +31,7 @@ button {
 
 button:hover {
     background: inherit;
-    /* Menggunakan warna aksen untuk hover */
+    background-color: #000000;
     color: @color6; 
     border-bottom: 2px solid @color6;
     border-radius: 15px;
@@ -44,21 +42,18 @@ button:hover {
 }
 
 #workspaces button.focused {
-    background-color: rgba(0, 0, 0, 0.3);
-    /* Menggunakan warna yang kontras */
     color: @color7; 
 }
 
 #workspaces button.active {
-    background-color: rgba(0, 0, 0, 0.3);
-    /* Menggunakan warna aksen utama */
-    color: @color4; 
+    background: inherit;
+    background-color: #000000;
+    color: @color6; 
     border-bottom: 2px solid @color4;
     border-radius: 15px;
 }
 
 #workspaces button.urgent {
-    /* Warna statis untuk darurat tetap dipertahankan */
     background-color: #eb4d4b; 
 }
 
@@ -75,77 +70,81 @@ button:hover {
 #tray,
 #network,
 #mode,
-#scratchpad {
+#scratchpad,
+#custom-vpn { /* Ditambahkan custom-vpn di sini */
   padding: 0 12px;  
   margin-top: 3px;
   margin-bottom: 3px;
   margin-left: 3px;
   margin-right: 3px;
+  /* KUNCI: BACKGROUND HITAM SOLID */
+  background-color: #000000; 
+  border-radius: 15px;
 }
 
-/* Mengganti semua warna statis modul dengan variabel Pywal (color1 hingga color8) */
+/* Mengganti semua blok modul individual untuk background hitam solid */
 
 #clock {
-    background-color:  rgba(0, 0, 0, 0.3);
-    color: @color5; /* Contoh warna aksen 1 */
-    border-radius: 15px;
+    background-color:  #000000; /* HITAM SOLID */
+    color: @color5; 
     border-bottom: 2px solid @color5;
     
 }
 
 #clock.date {
-    background-color:  rgba(0, 0, 0, 0.3);
-    color: @color6; /* Contoh warna aksen 2 */
-    border-radius: 15px;
+    background-color:  #000000; /* HITAM SOLID */
+    color: @color6; 
     border-bottom: 2px solid @color6;
 }
 
 #temperature {
-    background-color:  rgba(0, 0, 0, 0.3);
-    color: @color3; /* Contoh warna aksen 3 */
-    border-radius: 15px;
+    background-color:  #000000; /* HITAM SOLID */
+    color: @color3; 
     border-bottom: 2px solid @color3;
     
 }
 
 #pulseaudio {
-    background-color:  rgba(0, 0, 0, 0.3);
-    color: @color4; /* Contoh warna aksen 4 */
-    border-radius: 15px;
+    background-color:  #000000; /* HITAM SOLID */
+    color: @color4; 
     border-bottom: 2px solid @color4;
     
 }
 
 #network {
-    background-color:  rgba(0, 0, 0, 0.3);
-    color: @color2; /* Contoh warna aksen 5 */
-    border-radius: 15px;
-    border-bottom: 2px solid @color2
+    background-color:  #000000; /* HITAM SOLID */
+    color: @color2; 
+    border-bottom: 2px solid @color2;
     
 }
 
 #idle_inhibitor {
     margin-right: 12px;
-    color: @color1; /* Contoh warna untuk idle inhibitor */
+    color: @color1; 
 }
 
 #idle_inhibitor.activated {
-    color: @color1; /* Tetap menggunakan warna merah Pywal (@color1) */
+    color: @color1; 
 }
 
 /* If workspaces is the leftmost module, omit left margin */
 .modules-left>widget:first-child>#workspaces {
     margin-left: 0;
+    /* Tambahkan background hitam solid ke workspace container jika perlu */
+    padding: 0 4px;
+    border-radius: 15px;
 }
 
 /* If workspaces is the rightmost module, omit right margin */
 .modules-right>widget:last-child>#workspaces {
     margin-right: 0;
+    /* Tambahkan background hitam solid ke workspace container jika perlu */
+    background-color: #000000; 
 }
 
 #custom-vpn {
-    color: @color7; /* Contoh warna aksen 6 */
-    border-radius: 15px;
+    /* Sudah termasuk di blok umum (#pulseaudio, #clock, dst) */
+    color: @color7; 
     padding-left: 6px;
     padding-right: 6px;
 }
