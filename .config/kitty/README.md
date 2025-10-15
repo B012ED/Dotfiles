@@ -4,20 +4,12 @@
 
 [![Tools-bored](https://img.shields.io/badge/endpoint?url=https://b012ed.github.io/B012ED-Tools.json&style=?style=for-the-badge&logo=appveyor)](https://www.studypool.com/notebank/search?notebank_qs=b012ed&notebank_qs_university=)
 
-
-nano ~/.bashrc
-
-
-
-  GNU nano 8.6                        /home/yusa/.bashrc                                  
-#
+                                
 # ~/.bashrc
 #
 
 
-# If not running interactively, don't do anything
 [[ $- != *i* ]] && return
-
 
 eval "$(starship init bash)"
 
@@ -32,12 +24,8 @@ export PATH="$HOME/.config/yusa:$PATH"
 
 fastfetch
 
-# --- Pywal Startup Hook ---
-# Baris ini memuat variabel warna Pywal terakhir yang dihasilkan (colors.sh)
-# setiap kali Bash dimulai, memastikan warna terminal tetap persisten.
 if [ -f "$HOME/.cache/wal/colors.sh" ]; then
     . "$HOME/.cache/wal/colors.sh"
 fi
-# --------------------------
 
 echo
