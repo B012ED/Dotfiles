@@ -43,6 +43,7 @@
                 "",
                 "",
                 " "
+                //pavucontrol",
             ]
         },
         "on-click": "pavucontrol"
