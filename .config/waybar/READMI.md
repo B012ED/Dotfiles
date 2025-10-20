@@ -12,4 +12,4 @@
 
 If successful: You will see CSS code containing color definitions (@define-color ...). This means your Pywal is correctly configured for Waybar!
 
-To display the waybar icon, we need “JerBrainsMonoNerdFont”  https://www.nerdfonts.com/font-downloads and create a folder “mkdir -p ~/.local/share/fonts” paste everything.
+To display the waybar icon, we need “JerBrainsMonoNerdFont”  https://www.nerdfonts.com/font-downloads and create a folder “mkdir -p ~/.local/share/fonts” paste everything cp Jet* ~/.local/share/fonts
