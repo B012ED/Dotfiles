@@ -1,22 +1,52 @@
 #!/bin/bash
-# Skrip: yusawall (FINAL V7 - BORDER PYWAL ASLI)
+# Skrip: yusawall_mod (FINAL V7 - BORDER PYWAL ASLI)
 # Fungsi: Mengganti Wallpaper Pywal, menyimpan jalur, dan memperbarui Waybar/Hyprland dengan skema warna Pywal asli.
+# Perubahan: Menambahkan fungsionalitas 'yusawall list'.
 
 # --- Variabel Konfigurasi ---
 WALLPAPER_DIR="$HOME/.config/wallpapers"
 MONITOR_NAME="HDMI-A-1" 
 LAST_WALLPAPER_FILE="$HOME/.cache/last_wallpaper.txt"
 
+# --- Fungsi Baru: Menampilkan Daftar Wallpaper ---
+show_wallpaper_list() {
+    echo "========================================"
+    echo "  DAFTAR WALLPAPER DI $WALLPAPER_DIR"
+    echo "========================================"
+    
+    # Cek apakah direktori ada
+    if [ ! -d "$WALLPAPER_DIR" ]; then
+        echo "Error: Direktori wallpaper tidak ditemukan: $WALLPAPER_DIR"
+        exit 1
+    fi
+    
+    # Mencari file gambar. Ekstensi umum: png, jpg, jpeg, webp.
+    # Menggunakan find untuk penanganan yang lebih baik, diurutkan secara alfabetis
+    find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" \) -printf "%f\n" | sort
+    
+    echo "========================================"
+    echo "Penggunaan: yusawall <nama_gambar>"
+    exit 0
+}
+
 # 1. Cek Argumen & Pywal
 if [ -z "$1" ]; then
-    echo "Penggunaan: yusawall <nama_gambar>"; exit 1
+    echo "Penggunaan: yusawall <nama_gambar> atau yusawall list"
+    exit 1
+elif [ "$1" == "list" ]; then
+    show_wallpaper_list
 fi
+
 if ! command -v wal &> /dev/null; then
-    echo "Error: pywal ('wal') tidak ditemukan. Pastikan Anda sudah menginstalnya."; exit 1
+    echo "Error: pywal ('wal') tidak ditemukan. Pastikan Anda sudah menginstalnya."
+    exit 1
 fi
+
 WALLPAPER_PATH="$WALLPAPER_DIR/$1" 
 if [ ! -f "$WALLPAPER_PATH" ]; then
-    echo "Error: File wallpaper tidak ditemukan di: $WALLPAPER_PATH"; exit 1
+    echo "Error: File wallpaper tidak ditemukan di: $WALLPAPER_PATH"
+    echo "Coba 'yusawall list' untuk melihat daftar yang tersedia."
+    exit 1
 fi
 
 # 3. Aplikasikan Pywal dan Simpan Jalur
