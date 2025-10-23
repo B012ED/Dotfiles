@@ -1,11 +1,9 @@
 {
-
     "margin-top": 10,
     "margin-left": 10,
     "margin-right": 10,
     "spacing": 1,
     "height": 30,
-
 
     "position": "top",
     "modules-left": [
@@ -19,12 +17,21 @@
         "network",
         "pulseaudio",
         "temperature",
-        "clock"
+        "clock",
+        "custom/power-button"
     ],
+
+    "custom/power-button": { 
+        "format" : "",
+        "tooltip": "Power Menu",
+        "on-click": "exec $HOME/.config/yusa/yupower.sh"
+    },
+
     "clock": {
         "format": "<span foreground='#f5c2e7'>   </span>{:%a %d %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
+    
     "temperature": {
         "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
         "critical-threshold": 80,
@@ -35,6 +42,7 @@
             ""
         ]
     },
+    
     "pulseaudio": {
         "format": "{icon}  {volume}%",
         "format-muted": "",
@@ -43,24 +51,25 @@
                 "",
                 "",
                 " "
-                //pavucontrol",
             ]
         },
         "on-click": "pavucontrol"
     },
-      "network": {
-    "format": "{auto}",
-    "format-wifi": "    {signalStrength}%",
-    "format-ethernet": "  {ifname}",
-    "format-disconnected": "Disconnected ⚠",
-    "tooltip-format": " {ifname} via {gwaddri}",
-    "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
-    "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
-    "tooltip-format-disconnected": "Disconnected",
-    "max-length": 50,
-    "on-click": "~/.config/yusa/yunm-applet.sh toggle",
-    "on-click-right": "~/.config/yusa/yunm-applet.sh toggle",
+    
+    "network": {
+        "format": "{auto}",
+        "format-wifi": "    {signalStrength}%",
+        "format-ethernet": "  {ifname}",
+        "format-disconnected": "Disconnected ⚠",
+        "tooltip-format": " {ifname} via {gwaddri}",
+        "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
+        "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
+        "tooltip-format-disconnected": "Disconnected",
+        "max-length": 50,
+        "on-click": "~/.config/yusa/yunm-applet.sh toggle",
+        "on-click-right": "~/.config/yusa/yunm-applet.sh toggle"
     },
+    
     "tray": {
         // "icon-size": 30,
         "spacing": "10"
