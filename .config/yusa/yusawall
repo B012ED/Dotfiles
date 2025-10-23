@@ -1,100 +1,67 @@
 #!/bin/bash
-# Skrip: yusawall_mod (FINAL V7 - BORDER PYWAL ASLI)
-# Fungsi: Mengganti Wallpaper Pywal, menyimpan jalur, dan memperbarui Waybar/Hyprland dengan skema warna Pywal asli.
-# Perubahan: Menambahkan fungsionalitas 'yusawall list'.
 
-# --- Variabel Konfigurasi ---
 WALLPAPER_DIR="$HOME/.config/wallpapers"
 MONITOR_NAME="HDMI-A-1" 
 LAST_WALLPAPER_FILE="$HOME/.cache/last_wallpaper.txt"
 
-# --- Fungsi Baru: Menampilkan Daftar Wallpaper ---
 show_wallpaper_list() {
-    echo "========================================"
-    echo "  DAFTAR WALLPAPER DI $WALLPAPER_DIR"
-    echo "========================================"
+    echo "==============================================="
+    echo "  Wallpaperlist $WALLPAPER_DIR  "
+    echo "==============================================="
     
-    # Cek apakah direktori ada
     if [ ! -d "$WALLPAPER_DIR" ]; then
-        echo "Error: Direktori wallpaper tidak ditemukan: $WALLPAPER_DIR"
+        echo "Error: Wallpapers directory not found: $WALLPAPER_DIR"
         exit 1
     fi
     
-    # Mencari file gambar. Ekstensi umum: png, jpg, jpeg, webp.
-    # Menggunakan find untuk penanganan yang lebih baik, diurutkan secara alfabetis
     find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" \) -printf "%f\n" | sort
-    
     echo "========================================"
-    echo "Penggunaan: yusawall <nama_gambar>"
+    echo 
+    echo "Use: yusawall <wallpaper_name>"
     exit 0
 }
 
-# 1. Cek Argumen & Pywal
 if [ -z "$1" ]; then
-    echo "Penggunaan: yusawall <nama_gambar> atau yusawall list"
+    echo "Use: yusawall <wallpaper_name> or yusawall list"
     exit 1
 elif [ "$1" == "list" ]; then
     show_wallpaper_list
 fi
 
 if ! command -v wal &> /dev/null; then
-    echo "Error: pywal ('wal') tidak ditemukan. Pastikan Anda sudah menginstalnya."
+    echo "Error: pywal ('wal') Not found. make sure you have installed it."
     exit 1
 fi
 
 WALLPAPER_PATH="$WALLPAPER_DIR/$1" 
 if [ ! -f "$WALLPAPER_PATH" ]; then
-    echo "Error: File wallpaper tidak ditemukan di: $WALLPAPER_PATH"
-    echo "Coba 'yusawall list' untuk melihat daftar yang tersedia."
+    echo "Error: Wallpaper file not found in: $WALLPAPER_PATH"
+    echo "Try 'yusawall list' To see the available list."
     exit 1
 fi
 
-# 3. Aplikasikan Pywal dan Simpan Jalur
-echo "Menerapkan Pywal pada $WALLPAPER_PATH..."
+echo "Apply pywal to $WALLPAPER_PATH..."
 wal -i "$WALLPAPER_PATH"
 echo "$WALLPAPER_PATH" > "$LAST_WALLPAPER_FILE"
 
-# =========================================================================
-# 4. INTEGRASI HYPRLAND BORDER (WARNA CAVA ASLI)
-# =========================================================================
-echo "Memperbarui warna border Hyprland (mengikuti warna CAVA/Pywal asli)..."
+COLOR_CAVA_1=$(cat "$HOME/.cache/wal/colors" | sed -n '3p')   
+COLOR_CAVA_2=$(cat "$HOME/.cache/wal/colors" | sed -n '5p')   
+COLOR_INACTIVE=$(cat "$HOME/.cache/wal/colors" | sed -n '7p') 
 
-# Ambil Warna Pywal yang digunakan sebelumnya:
-COLOR_CAVA_1=$(cat "$HOME/.cache/wal/colors" | sed -n '3p')   # color2 (Aksen gelap)
-COLOR_CAVA_2=$(cat "$HOME/.cache/wal/colors" | sed -n '5p')   # color4 (Aksen menengah)
-COLOR_INACTIVE=$(cat "$HOME/.cache/wal/colors" | sed -n '7p') # color6 (Abu-abu netral)
-
-# Border Aktif: Gradien dari color2 ke color4 dengan transparansi 'ee'
-hyprctl keyword general:col.active_border "rgba(${COLOR_CAVA_1}ee) rgba(${COLOR_CAVA_2}ee) 45deg"
-# Border Non-Aktif: Warna netral (color6) dengan transparansi 'aa'
-hyprctl keyword general:col.inactive_border "rgba(${COLOR_INACTIVE}aa)"
-
-# KUNCI: Memaksa Hyprland untuk memuat ulang konfigurasi agar perubahan border berlaku
-hyprctl reload
-echo "Warna border Hyprland di-update dan konfigurasi di-reload."
-# =========================================================================
-
-# 5. PENGATURAN WALLPAPER DI HYPRLAND
-echo "Mengatur wallpaper di Hyprland..."
+echo "Setting wallpaper in Hyprland..."
 if ! pgrep -x hyprpaper > /dev/null; then
-    echo "Hyprpaper daemon tidak berjalan, meluncurkan..."
+    echo "Hyprpaper daemon is not running, launching..."
     hyprctl dispatch exec hyprpaper &
     sleep 1.0 
 fi
 hyprctl hyprpaper preload "$WALLPAPER_PATH"
 hyprctl hyprpaper wallpaper "$MONITOR_NAME,$WALLPAPER_PATH"
-echo "Wallpaper di monitor $MONITOR_NAME telah diubah."
+echo "Wallpaper di monitor $MONITOR_NAME has been changed"
 
-# 6. MUAT ULANG WAYBAR (Metode Paling Stabil)
-echo "Memuat ulang Waybar untuk menerapkan skema warna baru..."
-
-# Cek apakah Waybar sedang berjalan
+echo "Reloading Waybar to apply new color scheme..."
 if pgrep -x waybar > /dev/null; then
-    echo "Menghentikan Waybar yang sedang berjalan..."
-    # 6a. Kirim sinyal SIGTERM untuk Waybar agar berhenti secara teratur
+    echo "Stopping a running Waybar..."
     pkill -SIGTERM waybar
-    
-    # 6b. JEDA WAJIB: Tunggu hingga Waybar benar-benar mati (maks 5 detik)
     TIMEOUT=5
     while pgrep -x waybar > /dev/null && [ $TIMEOUT -gt 0 ]; do
         sleep 0.5
@@ -102,12 +69,10 @@ if pgrep -x waybar > /dev/null; then
     done
 
     if [ $TIMEOUT -eq 0 ]; then
-        echo "Peringatan: Waybar gagal berhenti secara teratur. Melanjutkan peluncuran."
+        echo "Warning: Waybar failed to terminate in an orderly manner. Continuing launch."
     fi
 fi
 
-# 6c. Luncurkan Waybar baru
 waybar > /dev/null 2>&1 &
-echo "Waybar berhasil diluncurkan."
-
-echo "Proses penggantian wallpaper selesai."
+echo "Waybar successfully launched."
+echo "The wallpaper replacement process is complete."
