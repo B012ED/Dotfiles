@@ -1,0 +1,30 @@
+{
+    "label" : "lock",
+    "action" : "swaylock",
+    "text" : "Lock"
+},
+{   
+    "label" : "hibernate",
+    "action" : "~/.config/yusa/yulog.sh hibernate",
+    "text" : "Hibernate"
+},
+{
+    "label" : "logout",
+    "action" : "~/.config/yusa/yulog.sh logout",
+    "text" : "LogOut"
+},
+{
+    "label" : "suspend",
+    "action" : "~/.config/yusa/yulog.sh suspend",
+    "text" : "Suspend"
+},
+{
+    "label" : "reboot",
+    "action" : "~/.config/yusa/yulog.sh restart",
+    "text" : "Restart"
+},
+{
+    "label" : "shutdown",
+    "action" : "~/.config/yusa/yulog.sh shutdown",
+    "text" : "Shutdown"
+}
