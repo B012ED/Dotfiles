@@ -20,8 +20,8 @@
 },
 {
     "label" : "reboot",
-    "action" : "~/.config/yusa/yulog.sh restart",
-    "text" : "Restart"
+    "action" : "~/.config/yusa/yulog.sh reboot",
+    "text" : "Reboot"
 },
 {
     "label" : "shutdown",
