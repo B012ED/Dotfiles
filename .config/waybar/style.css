@@ -50,10 +50,6 @@ button:hover {
     border-radius: 15px;
 }
 
-#workspaces button.urgent {
-    background-color: #eb4d4b; 
-}
-
 #pulseaudio,
 #clock,
 #battery,
@@ -67,7 +63,8 @@ button:hover {
 #network,
 #mode,
 #scratchpad,
-#custom-vpn { 
+#custom-vpn,
+#custom-power-button { 
   padding: 0 12px;  
   margin-top: 3px;
   margin-bottom: 3px;
@@ -77,35 +74,37 @@ button:hover {
   border-radius: 15px;
 }
 
-#clock {
-    background-color:  #000000; 
-    color: @color5; 
+#custom-power-button {
+    margin-right: 25px;
+    color: @color5;
     border-bottom: 2px solid @color5;
+}
+
+#clock {
+
+    color: @color1; 
+    border-bottom: 2px solid @color1;
     
 }
 
 #clock.date {
-    background-color:  #000000; 
     color: @color6; 
     border-bottom: 2px solid @color6;
 }
 
 #temperature {
-    background-color:  #000000; 
     color: @color3; 
     border-bottom: 2px solid @color3;
     
 }
 
 #pulseaudio {
-    background-color:  #000000; 
     color: @color4; 
     border-bottom: 2px solid @color4;
     
 }
 
 #network {
-    background-color:  #000000; 
     color: @color2; 
     border-bottom: 2px solid @color2;
     
