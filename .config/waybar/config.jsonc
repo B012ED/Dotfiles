@@ -7,13 +7,15 @@
 
     "position": "top",
     "modules-left": [
-        "hyprland/workspaces"
+        "hyprland/workspaces",
+        "tray"
     ],
+
     "modules-center": [
         "hyprland/window"
     ],
+    
     "modules-right": [
-        "tray",
         "network",
         "pulseaudio",
         "temperature",
@@ -22,7 +24,7 @@
     ],
 
     "custom/power-button": { 
-        "format" : "",
+        "format": "",
         "tooltip": "Power Menu",
         "on-click": "exec $HOME/.config/yusa/yupower.sh"
     },
@@ -71,11 +73,8 @@
     },
     
     "tray": {
-        // "icon-size": 30,
-        "spacing": "10"
-        // "icons": {
-        //   "blueman": "bluetooth",
-        //   "TelegramDesktop": "$HOME/.config/share/icons/hicolor/16x16/apps/telegram.png"
-        // }
+        "spacing": 10,
+        "icon-size": 20
     }
 }
+
