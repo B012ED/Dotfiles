@@ -5,7 +5,7 @@
 
 [![Tools-bored](https://img.shields.io/badge/endpoint?url=https://b012ed.github.io/B012ED-Tools.json&style=?style=for-the-badge&logo=appveyor)](https://www.studypool.com/notebank/search?notebank_qs=b012ed&notebank_qs_university=)
 
-1. Install pywal
+1. Install python-pywal
 2. Run pywal, for example: wal -i ~/.config/wallpapers/african-light.jpg
 3. Wait until pywal extracts the colors
 4. Run cat ~/.cache/wal/colors-waybar.css
