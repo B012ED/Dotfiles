@@ -20,3 +20,14 @@ yay -S whitesur-gtk-theme-git
 yay -S orchis-theme
 yay -S qogir-gtk-theme
 yay -S graphite-gtk-theme
+
+# Icon
+yay -S tela-icon-theme
+yay -S papirus-icon-theme
+yay -S fluent-icon-theme
+yay -S candy-icons
+
+# Cursor
+yay -S bibata-cursor-theme
+yay -S volantes-cursors
+yay -S phinger-cursors
