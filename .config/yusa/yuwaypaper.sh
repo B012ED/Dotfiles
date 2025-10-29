@@ -1,7 +1,6 @@
 #!/bin/bash
-# Yusa edition
 
-WALLPAPER="$1"
+source ~/.config/yusa/yusa.sh
 
 if [ -z "$WALLPAPER" ]; then
     echo "Usage: yuwaypaper.sh <path_to_image>"
@@ -31,31 +30,7 @@ pgrep -x kitty >/dev/null && pkill -USR1 kitty
 if [ -d "$HOME/.config/wlogout" ]; then
     echo "Updating Wlogout colors..."
     source "$HOME/.cache/wal/colors.sh"
-    cat > "$HOME/.config/wlogout/style.css" <<EOF
-* {
-    background-image: none;
-    box-shadow: none;
-}
-window {
-    background-color: rgba(0,0,0,0.7);
-}
-button {
-    border-radius: 8px;
-    border-color: ${color1};
-    background-color: ${background};
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 25%;
-    color: ${foreground};
-    margin: 10px;
-    padding: 20px;
-}
-button:hover, button:active, button:focus {
-    background-color: ${color1};
-    color: ${background};
-    border-color: ${foreground};
-}
-EOF
+    echo "Wallpaper and dynamic colors applied successfully."
 fi
 
-echo "Wallpaper and dynamic colors applied successfully."
+
