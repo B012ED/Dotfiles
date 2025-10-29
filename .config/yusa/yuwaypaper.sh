@@ -2,23 +2,23 @@
 
 source ~/.config/yusa/yusa.sh
 
-if [ -z "$WALLPAPER" ]; then
+if [ -z "$YUSA" ]; then
     echo "Usage: yuwaypaper.sh <path_to_image>"
     exit 1
 fi
 
-if [ ! -f "$WALLPAPER" ]; then
-    echo "Error: File not found → $WALLPAPER"
+if [ ! -f "$YUSA" ]; then
+    echo "Error: File not found → $YUSA"
     exit 1
 fi
 
 echo "Applying Pywal color scheme..."
-/usr/bin/wal -i "$WALLPAPER" -n -t
+/usr/bin/wal -i "$YUSA" -n -t
 
 if command -v swww &>/dev/null; then
     echo "Setting wallpaper via swww..."
     pgrep -x swww-daemon >/dev/null || swww init
-    swww img "$WALLPAPER" --transition-type grow --transition-step 255
+    swww img "$YUSA" --transition-type grow --transition-step 255
 fi
 
 echo "Reloading Waybar..."
