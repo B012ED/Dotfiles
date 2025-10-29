@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-WALLPAPER="$1"
+YUSA="$1"
