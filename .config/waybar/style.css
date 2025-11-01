@@ -62,13 +62,13 @@ button:hover {
 #scratchpad,
 #custom-vpn,
 #custom-power-button { 
-  padding: 0 12px;  
-  margin-top: 3px;
-  margin-bottom: 3px;
-  margin-left: 3px;
-  margin-right: 3px;
-  background-color: #000000; 
-  border-radius: 15px;
+    background: inherit;
+    background-color: #000000;
+    color: @color5;
+    border-bottom: 2px solid @color5;
+    border-radius: 15px;
+    padding: 0 9px;
+    margin-left: 3px;
 }
 
 #custom-power-button {
@@ -78,7 +78,6 @@ button:hover {
 }
 
 #clock {
-
     color: @color1; 
     border-bottom: 2px solid @color1;
     
