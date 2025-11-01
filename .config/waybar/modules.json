@@ -1,0 +1,62 @@
+{
+    "custom/power-button": {
+        "format": "",
+        "tooltip": "Power Menu",
+        "on-click": "exec $HOME/.config/yusa/yupower.sh"
+    },
+    "custom/clients": {
+        "exec": "bash -c 'hyprctl clients -j | jq -r \".[].class\" | sort -u | while read -r app; do case \"$app\" in app.zen_browser.zen) echo -n \" \";; spotify) echo -n \" \";; code|Code|code-oss) echo -n \" \";; kitty|Alacritty) echo -n \" \";; thunar) echo -n \" \";; chromium|chrome) echo -n \" \";; *) echo -n \" \";; esac; done; echo'",
+        "interval": 2,
+        "format": "{}",
+        "on-click": "exec $HOME/.config/yusa/yulaunch.sh",
+        "escape": false
+    },
+
+    "clock": {
+        "format": "<span foreground='#f5c2e7'>   </span>{:%a %d %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": [
+            "",
+            "",
+            ""
+        ]
+    },
+
+    "pulseaudio": {
+        "format": "{icon}  {volume}%",
+        "format-muted": "",
+        "format-icons": {
+            "default": [
+                "",
+                "",
+                " "
+            ]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "network": {
+        "format": "{auto}",
+        "format-wifi": " {signalStrength}%",
+        "format-ethernet": "   {ifname}",
+        "format-disconnected": "Disconnected ⚠",
+        "tooltip-format": " {ifname} via {gwaddri}",
+        "tooltip-format-wifi": " {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
+        "tooltip-format-ethernet": "   {ifname}\nIP: {ipaddr}\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
+        "tooltip-format-disconnected": "Disconnected",
+        "max-length": 50,
+        "on-click": "~/.config/yusa/yunm-applet.sh toggle",
+        "on-click-right": "~/.config/yusa/yunm-applet.sh toggle"
+    },
+
+    "tray": {
+        "spacing": 10,
+        "icon-size": 20
+    }
+}    

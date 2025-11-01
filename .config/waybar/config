@@ -1,0 +1,31 @@
+{
+    "margin-top": 10,
+    "margin-left": 10,
+    "margin-right": 10,
+    "spacing": 1,
+    "height": 30,
+
+    "position": "top",
+
+    "modules-left": [
+        "hyprland/workspaces"  
+    ],
+
+    "modules-center": [
+        "custom/clients"          
+    ],
+
+    "include": [
+        "~/.config/waybar/modules.json"
+    ],
+
+    "modules-right": [
+        "tray",
+        "network",
+        "pulseaudio",
+        "temperature",
+        "clock",
+        "custom/power-button"
+    ]
+}
+    
