@@ -14,7 +14,7 @@
 
     "clock": {
         "format": "<span foreground='#f5c2e7'>   </span>{:%a %d %H:%M}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     },
 
     "temperature": {
@@ -25,7 +25,8 @@
             "",
             "",
             ""
-        ]
+        ],
+        "on-click": "bash ~/.config/yusa/yubtop.sh"
     },
 
     "pulseaudio": {
@@ -55,8 +56,50 @@
         "on-click-right": "~/.config/yusa/yunm-applet.sh toggle"
     },
 
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        },
+    },
     "tray": {
         "spacing": 10,
         "icon-size": 20
+    },
+
+    "cpu": {
+    "format": " C {usage}% ",
+    "on-click": "bash ~/.config/yusa/yuhtop.sh"
+    },
+
+    "memory": {
+    "format": " M {}% ",
+    "on-click": "bash ~/.config/yusa/yuhtop.sh"
+    },
+
+    "disk": {
+    "interval": 30,
+    "format": "D {percentage_used}% ",
+    "on-click": "bash ~/.config/yusa/yuhtop.sh"
+    },
+
+    "group/hardware": {
+    "orientation": "inherit",
+    "drawer": {
+        "transition-duration": 700,
+        "children-class": "not-memory",
+        "transition-left-to-right": true
+    },
+    "modules": [
+        "custom/system",
+        "disk",
+        "cpu",
+        "memory",
+        ]
     }
-}    
+},
