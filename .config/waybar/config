@@ -8,7 +8,9 @@
     "position": "top",
 
     "modules-left": [
-        "hyprland/workspaces"  
+        "hyprland/workspaces",
+        "network",
+        "tray"
     ],
 
     "modules-center": [
@@ -20,9 +22,10 @@
     ],
 
     "modules-right": [
-        "tray",
-        "network",
+        "group/tools",
+        "power-profiles-daemon",
         "pulseaudio",
+        "group/hardware",
         "temperature",
         "clock",
         "custom/power-button"
