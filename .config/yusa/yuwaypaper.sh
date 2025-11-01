@@ -31,6 +31,9 @@ if [ -d "$HOME/.config/wlogout" ]; then
     echo "Updating Wlogout colors..."
     source "$HOME/.cache/wal/colors.sh"
     echo "Wallpaper and dynamic colors applied successfully."
+    sleep 4
+    notify-send -t 2500 "Wallpaper successfully changed dynamically"
+
 fi
 
 
