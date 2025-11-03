@@ -1,77 +1,89 @@
 #!/bin/bash
 
 source ~/.config/yusa/yusascript.sh
-MONITOR_NAME="HDMI-A-1" 
+MONITOR_NAME="HDMI-A-1"
 LAST_WALLPAPER_FILE="$HOME/.cache/last_wallpaper.txt"
 
 show_wallpaper_list() {
     echo "==============================================="
-    echo "  Wallpaperlist $YUSA  "
+    echo "  Wallpaper list in: $YUSA"
     echo "==============================================="
-    
+
     if [ ! -d "$YUSA" ]; then
-        echo "Error: Wallpapers directory not found: $YUSA"
+        echo "Error: Wallpapers directory not found → $YUSA"
         exit 1
     fi
-    
+
     find "$YUSA" -maxdepth 1 -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" \) -printf "%f\n" | sort
-    echo "========================================"
-    echo 
-    echo "Use: yusawall <wallpaper_name>"
+    echo "==============================================="
+    echo
+    echo "Usage: yusawall <wallpaper_name>"
     exit 0
 }
 
 if [ -z "$1" ]; then
-    echo "Use: yusawall <wallpaper_name> or yusawall list"
+    echo "Usage: yusawall <wallpaper_name> or yusawall list"
     exit 1
 elif [ "$1" == "list" ]; then
     show_wallpaper_list
 fi
 
+if ! command -v swww &> /dev/null; then
+    echo "Error: 'swww' not found. Install it with 'yay -S swww'."
+    exit 1
+fi
+
 if ! command -v wal &> /dev/null; then
-    echo "Error: pywal ('wal') Not found. make sure you have installed it."
+    echo "Error: 'pywal' not found. Install it with 'pip install pywal'."
     exit 1
 fi
 
-WALLPAPER_PATH="$YUSA/$1" 
+WALLPAPER_PATH="$YUSA/$1"
 if [ ! -f "$WALLPAPER_PATH" ]; then
-    echo "Error: Wallpaper file not found in: $WALLPAPER_PATH"
-    echo "Try 'yusawall list' To see the available list."
+    echo "Error: Wallpaper file not found → $WALLPAPER_PATH"
+    echo "Try 'yusawall list' to see available wallpapers."
     exit 1
 fi
 
-echo "Apply pywal to $WALLPAPER_PATH..."
+echo "Applying pywal to $WALLPAPER_PATH..."
 wal -i "$WALLPAPER_PATH"
 echo "$WALLPAPER_PATH" > "$LAST_WALLPAPER_FILE"
 
-COLOR_CAVA_1=$(cat "$HOME/.cache/wal/colors" | sed -n '3p')   
-COLOR_CAVA_2=$(cat "$HOME/.cache/wal/colors" | sed -n '5p')   
-COLOR_INACTIVE=$(cat "$HOME/.cache/wal/colors" | sed -n '7p') 
-
-echo "Setting wallpaper in Hyprland..."
-if  pgrep -x hyprpaper > /dev/null; then
-    hyprctl dispatch exec hyprpaper &
-    sleep 1.0 
+echo "Setting wallpaper using swww..."
+if ! pgrep -x swww-daemon > /dev/null; then
+    swww init
+    sleep 0.5
 fi
-hyprctl hyprpaper preload "$WALLPAPER_PATH"
-hyprctl hyprpaper wallpaper "$MONITOR_NAME,$WALLPAPER_PATH"
-echo "Wallpaper di monitor $MONITOR_NAME has been changed"
 
-echo "Reloading Waybar to apply new color scheme..."
+swww img "$WALLPAPER_PATH" \
+    --transition-type="center" \
+    --transition-duration=2 \
+    --transition-fps=60
+
+echo "Wallpaper on monitor $MONITOR_NAME has been changed."
+
+echo "Reloading Waybar to apply the new color scheme..."
 if pgrep -x waybar > /dev/null; then
-    echo "Stopping a running Waybar..."
     pkill -SIGTERM waybar
-    TIMEOUT=5
-    while pgrep -x waybar > /dev/null && [ $TIMEOUT -gt 0 ]; do
-        sleep 0.5
-        TIMEOUT=$((TIMEOUT - 1))
-    done
+    sleep 0.8
+fi
+waybar > /dev/null 2>&1 &
 
-    if [ $TIMEOUT -eq 0 ]; then
-        echo "Warning: Waybar failed to terminate in an orderly manner. Continuing launch."
-    fi
+echo "Waybar relaunched successfully."
+echo "Wallpaper replacement process complete."
+
+if ! grep -q "swww img" ~/.config/hypr/exec-once.conf 2>/dev/null; then
+    RESTORE_LINE="exec-once = swww init && swww img \$(cat $LAST_WALLPAPER_FILE)"
+    echo "$RESTORE_LINE" >> ~/.config/hypr/exec-once.conf
+    echo "Added auto-restore wallpaper entry to Hyprland exec-once."
+    sleep 4
 fi
 
-waybar > /dev/null 2>&1 &
-echo "Waybar successfully launched."
-echo "The wallpaper replacement process is complete."
+if [ -d "$HOME/.config/wlogout" ]; then
+    echo "Updating Wlogout colors..."
+    source "$HOME/.cache/wal/colors.sh"
+    echo "Wallpaper and dynamic colors applied successfully."
+    sleep 4
+    notify-send -t 2500 "Wallpaper successfully changed dynamically"
+
+fi
