@@ -9,9 +9,12 @@
 }
 
 window {
-	background-color: rgba(12, 12, 12, 0.3);
-
+    background-color: rgba(12,12,12,0.3);
+    background-image: image(url("noise.png"));
+    background-repeat: repeat;
+    background-blend-mode: overlay;
 }
+
 
 button {
 	color: #FFFFFF;
@@ -20,11 +23,9 @@ button {
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 25%;
-
 	border-style: solid;
-	background-color: rgba(12, 12, 12, 0.7);
-	border: 3px solid #FFFFFF;
-
+	background-color: rgba(0, 0, 0, 0.534);
+	border: 3px solid #4b4545;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
 }
 
@@ -77,3 +78,4 @@ button span {
 	border-radius: 20px;
 	background-image: image(url("icons/reboot.png"));
 }
+
