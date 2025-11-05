@@ -2,7 +2,7 @@
     
     "custom/power-button": {
         "format": "",
-        "tooltip": "Power Menu",
+        "tooltip": false,
         "on-click": "exec $HOME/.config/yusa/yupower.sh"
     },
     "custom/clients": {
@@ -10,19 +10,17 @@
         "interval": 2,
         "format": "{}",
         "escape": false,
-        "on-click": "exec $HOME/.config/yusa/yulaunch.sh"
+        "tooltip": false
     },
 
     "custom/yusa": {
         "format": "<span rise='-1000'>󰣇</span>",
-        "tooltip": false,
-        
-
+        "tooltip": false
     },
 
     "clock": {
-        "format": "<span foreground='#f5c2e7'>   </span>{:%a %d %H:%M}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "<span rise='-500'>  </span>{:%a %d %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
 
     "temperature": {
@@ -73,7 +71,7 @@
             "performance": "",
             "balanced": "",
             "power-saver": ""
-        },
+            }
     },
     "tray": {
         "spacing": 10,
@@ -81,18 +79,18 @@
     },
 
     "cpu": {
-        "format": " C:{usage}% ",
+        "format": " 󰍛 | {usage}% ",
         "on-click": "bash ~/.config/yusa/yuhtop.sh"
     },
 
     "memory": {
-        "format": " M:{}% ",
+        "format": " 󰓅 | {}% ",
         "on-click": "bash ~/.config/yusa/yuhtop.sh"
     },
 
     "disk": {
         "interval": 30,
-        "format": "D:{percentage_used}% ",
+        "format": "󰋊 | {percentage_used}% ",
         "on-click": "bash ~/.config/yusa/yuhtop.sh"
     },
 
@@ -107,8 +105,9 @@
         "temperature",
         "disk",
         "cpu",
-        "memory",
+        "memory"
         ]
+
     },
     "group/yusa": {
     "orientation": "inherit",
@@ -121,8 +120,33 @@
         "custom/yusa",
         "pulseaudio",
         "network",
+        "power-profiles-daemon"
         ]
+
     },
+    "custom/myth": {
+        "format": "<span rise='-1000'></span>",
+        "tooltip": false,
+        "on-click": "exec $HOME/.config/yusa/yulaunch.sh"
+
+    },
+    "custom/sway": {
+    "format": "<span rise='-1000'>󰂚</span>",
+    "tooltip": false
+
+    },
+    "group/myth": {
+    "orientation": "inherit",
+    "drawer": {
+        "transition-duration": 700,
+        "children-class": "not-memory",
+        "transition-left-to-right": false
+         },
+    "modules": [
+        "custom/sway",
+        "custom/myth"
+        ]
+    }
 
     
-},
+}
