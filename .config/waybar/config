@@ -1,4 +1,4 @@
-{
+    {
     "margin-top": 10,
     "margin-left": 10,
     "margin-right": 10,
@@ -7,25 +7,13 @@
 
     "position": "top",
 
-    "modules-left": [
-        "group/yusa",
-        "tray",
-        "custom/clients"
-    ],
+    "include": ["~/.config/waybar/modules.json"],
 
-    "modules-center": [
-        "hyprland/workspaces"       
-    ],
+    "modules-left": ["group/yusa","tray","custom/clients"],
 
-    "include": [
-        "~/.config/waybar/modules.json"
-    ],
+    "modules-center": ["hyprland/workspaces"],
 
-    "modules-right": [
-        "power-profiles-daemon",
-        "group/hardware",
-        "clock",
-        "custom/power-button"
-    ]
-}
+    "modules-right": ["group/myth","group/hardware","clock","custom/power-button"]
+    }
+
     
