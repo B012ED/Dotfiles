@@ -10,7 +10,6 @@
 
 window#waybar {
     background: @transfarans; 
-    padding: 0 4px;
 }
 
 #workspaces {
@@ -104,8 +103,13 @@ window#waybar {
     
 }
 
+#custom-sway {
+    color: @color4; 
+    border-bottom: 2px solid @color4;
+
+}
     
-#tray {a
+#tray {
     color: @color4; 
     border-bottom: 2px solid @color4;
 }
@@ -119,11 +123,29 @@ window#waybar {
     color: @color1; 
 }
 
-
 #custom-vpn {
     color: @color7; 
     padding-left: 6px;
     padding-right: 6px;
+}
+
+#custom-myth {
+    background-color: #000000;
+    margin: 7.5px 3px;
+    padding: 0px 15px;
+    border-radius: 16px;
+    color: @color2; 
+    border-bottom: 2px solid @color2;
+    
+}
+
+#custom-sway {
+    background-color: #000000;
+    margin: 7.5px 3px;
+    padding: 0px 15px;
+    border-radius: 16px;
+    color: @color4; 
+    border-bottom: 2px solid @color4;
 }
 
 #custom-clients {
@@ -150,7 +172,7 @@ window#waybar {
 
 #power-profiles-daemon {
     background: #11111B;
-    margin: 7.5px 5px;
+    margin: 7.5px 3px;
     padding: 0px 15px;
     border-radius: 16px;
     border: solid 0px #cdd6f4;
