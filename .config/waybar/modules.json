@@ -1,4 +1,5 @@
 {
+    
     "custom/power-button": {
         "format": "",
         "tooltip": "Power Menu",
@@ -8,8 +9,15 @@
         "exec": "bash -c 'hyprctl clients -j | jq -r \".[].class\" | sort -u | while read -r app; do case \"$app\" in app.zen_browser.zen) echo -n \" \";; spotify) echo -n \" \";; code|Code|code-oss) echo -n \" \";; kitty|Alacritty) echo -n \" \";; thunar) echo -n \" \";; chromium|chrome) echo -n \" \";; *) echo -n \" \";; esac; done; echo'",
         "interval": 2,
         "format": "{}",
-        "on-click": "exec $HOME/.config/yusa/yulaunch.sh",
-        "escape": false
+        "escape": false,
+        "on-click": "exec $HOME/.config/yusa/yulaunch.sh"
+    },
+
+    "custom/yusa": {
+        "format": "<span rise='-1000'>󰣇</span>",
+        "tooltip": false,
+        
+
     },
 
     "clock": {
@@ -73,19 +81,19 @@
     },
 
     "cpu": {
-    "format": " C {usage}% ",
-    "on-click": "bash ~/.config/yusa/yuhtop.sh"
+        "format": " C:{usage}% ",
+        "on-click": "bash ~/.config/yusa/yuhtop.sh"
     },
 
     "memory": {
-    "format": " M {}% ",
-    "on-click": "bash ~/.config/yusa/yuhtop.sh"
+        "format": " M:{}% ",
+        "on-click": "bash ~/.config/yusa/yuhtop.sh"
     },
 
     "disk": {
-    "interval": 30,
-    "format": "D {percentage_used}% ",
-    "on-click": "bash ~/.config/yusa/yuhtop.sh"
+        "interval": 30,
+        "format": "D:{percentage_used}% ",
+        "on-click": "bash ~/.config/yusa/yuhtop.sh"
     },
 
     "group/hardware": {
@@ -93,13 +101,28 @@
     "drawer": {
         "transition-duration": 700,
         "children-class": "not-memory",
-        "transition-left-to-right": true
-    },
+        "transition-left-to-right": false
+         },
     "modules": [
-        "custom/system",
+        "temperature",
         "disk",
         "cpu",
         "memory",
         ]
-    }
+    },
+    "group/yusa": {
+    "orientation": "inherit",
+    "drawer": {
+        "transition-duration": 700,
+        "children-class": "not-memory",
+        "transition-right-to-left": true
+         },
+    "modules": [
+        "custom/yusa",
+        "pulseaudio",
+        "network",
+        ]
+    },
+
+    
 },
