@@ -8,13 +8,13 @@
     "position": "top",
 
     "modules-left": [
-        "hyprland/workspaces",
-        "network",
-        "tray"
+        "group/yusa",
+        "tray",
+        "custom/clients"
     ],
 
     "modules-center": [
-        "custom/clients"          
+        "hyprland/workspaces"       
     ],
 
     "include": [
@@ -22,11 +22,8 @@
     ],
 
     "modules-right": [
-        "group/tools",
         "power-profiles-daemon",
-        "pulseaudio",
         "group/hardware",
-        "temperature",
         "clock",
         "custom/power-button"
     ]
