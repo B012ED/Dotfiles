@@ -139,13 +139,14 @@ window#waybar {
     
 }
 
-#custom-sway {
+#custom-swaync {
     background-color: #000000;
     margin: 7.5px 3px;
     padding: 0px 15px;
     border-radius: 16px;
     color: @color4; 
     border-bottom: 2px solid @color4;
+    transition: all 0.3s ease;
 }
 
 #custom-clients {
@@ -180,5 +181,32 @@ window#waybar {
     font-style: normal;
     color: @color3; 
     border-bottom: 2px solid @color3;
-    
+}
+
+#custom-swaync.empty {
+    color: #a6adc8;
+    background: #313244;
+}
+
+#custom-swaync.notification {
+    color: #f9e2af;
+    background: #45475a;
+    animation: pulse 2s infinite;
+}
+
+#custom-swaync.disabled {
+    color: #f38ba8;
+    background: #45293b;
+    opacity: 0.7;
+}
+
+#custom-swaync.not-installed {
+    color: #f38ba8;
+    background: #45293b;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
 }
