@@ -13,7 +13,7 @@
 
     "modules-center": ["hyprland/workspaces"],
 
-    "modules-right": ["group/myth","group/hardware","clock","custom/power-button"]
+    "modules-right": ["custom/swaync","group/hardware","group/myth","custom/power-button"]
     }
 
     
