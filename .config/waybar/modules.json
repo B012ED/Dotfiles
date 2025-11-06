@@ -125,12 +125,13 @@
 
     },
     "custom/myth": {
-        "format": "<span rise='-1000'></span>",
+        "format": "",
+        "interval": 30,
         "tooltip": false,
-        "on-click": "exec $HOME/.config/yusa/yulaunch.sh"
+        "on-click": "~/.config/yusa/yulaunch.sh"
 
     },
-    "custom/sway": {
+    "custom/swaync": {
         "exec": "/home/yusa/.config/myth/myth.sh",
         "interval": 5,
         "format": "{}",
@@ -153,7 +154,7 @@
         "transition-left-to-right": false
         },
     "modules": [
-        "custom/sway",
+        "clock",
         "custom/myth"
         ]
     }
