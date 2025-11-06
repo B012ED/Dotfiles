@@ -131,8 +131,18 @@
 
     },
     "custom/sway": {
-    "format": "<span rise='-1000'>󰂚</span>",
-    "tooltip": false
+        "exec": "/home/yusa/.config/myth/myth.sh",
+        "interval": 5,
+        "format": "{}",
+        "format-icons": {
+        "enabled": "󰂚",
+        "disabled": "󰂛",
+        "none": "󰂛",
+        "dnd": "󰂛"
+        },
+    "on-click": "swaync-client -t",  
+    "on-click-right": "swaync-client -D", 
+    "on-click-middle": "swaync-client -C"
 
     },
     "group/myth": {
@@ -141,7 +151,7 @@
         "transition-duration": 700,
         "children-class": "not-memory",
         "transition-left-to-right": false
-         },
+        },
     "modules": [
         "custom/sway",
         "custom/myth"
