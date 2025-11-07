@@ -19,8 +19,20 @@
     },
 
     "clock": {
-        "format": "<span rise='-500'>  </span>{:%a %d %H:%M}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        "format": "  {:%H:%M}",
+        "format-alt": "{:%A, %B %d, %Y}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "mounth",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#787a81'><b>{}</b></span>",
+                "days": "<span color='#bec0c9'><b>{}</b></span>",
+                "weeks": "<span color='#b85504'><b>{}</b></span>"
+                }
+            }
     },
 
     "temperature": {
@@ -36,16 +48,26 @@
     },
 
     "pulseaudio": {
-        "format": "{icon}  {volume}%",
-        "format-muted": "",
-        "format-icons": {
-            "default": [
-                "",
-                "",
-                " "
-            ]
-        },
-        "on-click": "pavucontrol"
+    "format": "{icon}  {volume}%",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": " {icon} {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "",
+    "format-icons": {
+        "headphone": " ",
+        "hands-free": " ",
+        "headset": " ",
+        "phone": " ",
+        "portable": " ",
+        "car": " ",
+        "default": [
+        "",
+        "",
+        ""
+        ]
+    },
+    "on-click": "pavucontrol"
     },
 
     "network": {
@@ -79,18 +101,19 @@
     },
 
     "cpu": {
-        "format": " 󰍛 | {usage}% ",
-        "on-click": "bash ~/.config/yusa/yuhtop.sh"
+        "format": " 󰍛  | {usage}% ",
+        "on-click": "bash ~/.config/yusa/yuhtop.sh",
+        "class": "large-icon"
     },
 
     "memory": {
-        "format": " 󰓅 | {}% ",
+        "format": " 󰓅  | {}% ",
         "on-click": "bash ~/.config/yusa/yuhtop.sh"
     },
 
     "disk": {
         "interval": 30,
-        "format": "󰋊 | {percentage_used}% ",
+        "format": "󰋊  | {percentage_used}% ",
         "on-click": "bash ~/.config/yusa/yuhtop.sh"
     },
 
@@ -175,7 +198,4 @@
         "custom/myth"
         ]
     }
-    
-
-    
 }
