@@ -1,3 +1,6 @@
+
+@import "/home/yusa/.cache/wal/colors-rofi-dark.rasi"
+
 * {
     font: "Figtree 13";
     g-spacing: 10px;
