@@ -1,0 +1,89 @@
+#!/bin/bash
+
+source ~/.config/yusa/yusascript.sh
+MONITOR_NAME="HDMI-A-1"
+LAST_WALLPAPER_FILE="$HOME/.cache/last_wallpaper.txt"
+
+show_wallpaper_list() {
+    echo "==============================================="
+    echo "  Wallpaper list in: $YUSA"
+    echo "==============================================="
+
+    if [ ! -d "$YUSA" ]; then
+        echo "Error: Wallpapers directory not found → $YUSA"
+        exit 1
+    fi
+
+    find "$YUSA" -maxdepth 1 -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" \) -printf "%f\n" | sort
+    echo "==============================================="
+    echo
+    echo "Usage: yusawall <wallpaper_name>"
+    exit 0
+}
+
+if [ -z "$1" ]; then
+    echo "Usage: yusawall <wallpaper_name> or yusawall list"
+    exit 1
+elif [ "$1" == "list" ]; then
+    show_wallpaper_list
+fi
+
+if ! command -v swww &> /dev/null; then
+    echo "Error: 'swww' not found. Install it with 'yay -S swww'."
+    exit 1
+fi
+
+if ! command -v wal &> /dev/null; then
+    echo "Error: 'pywal' not found. Install it with 'pip install pywal'."
+    exit 1
+fi
+
+WALLPAPER_PATH="$YUSA/$1"
+if [ ! -f "$WALLPAPER_PATH" ]; then
+    echo "Error: Wallpaper file not found → $WALLPAPER_PATH"
+    echo "Try 'yusawall list' to see available wallpapers."
+    exit 1
+fi
+
+echo "Applying pywal to $WALLPAPER_PATH"
+wal -i "$WALLPAPER_PATH"
+echo "$WALLPAPER_PATH" > "$LAST_WALLPAPER_FILE"
+
+echo "Setting wallpaper using swww"
+if ! pgrep -x swww-daemon > /dev/null; then
+    swww init
+    sleep 0.5
+fi
+
+swww img "$WALLPAPER_PATH" \
+    --transition-type="center" \
+    --transition-duration=2 \
+    --transition-fps=60
+
+echo "Wallpaper on monitor $MONITOR_NAME has been changed."
+
+echo "Reloading Waybar to apply the new color scheme"
+if pgrep -x waybar > /dev/null; then
+    pkill -SIGTERM waybar
+    sleep 0.8
+fi
+waybar > /dev/null 2>&1 &
+
+echo "Waybar relaunched successfully."
+echo "Wallpaper replacement process complete."
+
+if ! grep -q "swww img" ~/.config/hypr/exec-once.conf 2>/dev/null; then
+    RESTORE_LINE="exec-once = swww init && swww img \$(cat $LAST_WALLPAPER_FILE)"
+    echo "$RESTORE_LINE" >> ~/.config/hypr/exec-once.conf
+    echo "Added auto-restore wallpaper entry to Hyprland exec-once."
+    sleep 4
+fi
+
+if [ -d "$HOME/.config/wlogout" ]; then
+    echo "Updating Wlogout colors."
+    source "$HOME/.cache/wal/colors.sh"
+    echo "Wallpaper and dynamic colors applied successfully."
+    sleep 4
+    notify-send -t 2500 "Wallpaper successfully changed dynamically"
+
+fi
