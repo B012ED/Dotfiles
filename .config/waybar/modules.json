@@ -138,8 +138,8 @@
         "exec": "/home/yusa/.config/yusa/yumyth.sh",
         "format": "{}",
         "interval": 30,
-        "tooltip-format": "Wallpaper",
-        "tooltip": true,
+        "tooltip-format": "{}",
+        "tooltip": false,
         "on-click": "~/.config/yusa/yulaunch.sh"
     },
     "hyprland/workspaces": {
