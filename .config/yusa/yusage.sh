@@ -1,8 +1,9 @@
 #!/bin/bash
 
-cat > ~/.config/yusa/yuarch.sh <<'012'
+cat > ~/.config/yusa/yuarch.sh <<'esac'
 #!/bin/bash
-cat > ~/.config/waybar/config <<'YUSA'
+
+cat > ~/.config/waybar/config <<'case'
 {
   "margin-top": 10,
   "margin-left": 10,
@@ -15,5 +16,5 @@ cat > ~/.config/waybar/config <<'YUSA'
   "modules-center": ["hyprland/workspaces"],
   "modules-right": ["custom/swaync","group/hardware","group/myth","custom/power-button"]
 }
-YUSA
-012
+case
+esac
