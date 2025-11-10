@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+bash -c 'hyprctl clients -j | jq -r \".[].class\" | sort -u | while read -r app; do case \"$app\" in app.zen_browser.zen) echo -n \" \";; spotify) echo -n \" \";; code|Code|code-oss) echo -n \" \";; kitty|Alacritty) echo -n \" \";; thunar) echo -n \" \";; chromium|chrome) echo -n \" \";; *) echo -n \" \";; esac; done
