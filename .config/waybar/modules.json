@@ -11,8 +11,15 @@
         "escape": false,
         "tooltip": false
     },
+    "disk": {
+        "interval": 30,
+        "format": "󰋊  | {percentage_used}% ",
+        "on-click": "bash ~/.config/yusa/yuhtop.sh"
+    },
     "custom/yusa": {
-        "format": "<span rise='-1000'>󰣇</span>",
+        "exec": "/home/yusa/.config/yusa/yusabi.sh",
+        "format": "{}",
+        "interval": 30,
         "tooltip": false
     },
     "clock": {
@@ -88,22 +95,8 @@
             "power-saver": ""
         }
     },
-    "tray": {
-        "spacing": 10,
-        "icon-size": 20
-    },
-    "cpu": {
-        "format": " 󰍛  | {usage}% ",
-        "on-click": "bash ~/.config/yusa/yuhtop.sh",
-        "class": "large-icon"
-    },
     "memory": {
         "format": " 󰓅  | {}% ",
-        "on-click": "bash ~/.config/yusa/yuhtop.sh"
-    },
-    "disk": {
-        "interval": 30,
-        "format": "󰋊  | {percentage_used}% ",
         "on-click": "bash ~/.config/yusa/yuhtop.sh"
     },
     "group/hardware": {
@@ -131,6 +124,7 @@
             "custom/yusa",
             "pulseaudio",
             "network",
+            "custom/updown_speed",
             "power-profiles-daemon"
         ]
     },
@@ -142,19 +136,10 @@
         "tooltip": true,
         "on-click": "~/.config/yusa/yulaunch.sh"
     },
-    "hyprland/workspaces": {
-        "on-click": "activate",
-        "active-only": false,
-        "all-outputs": true,
-        "format": "{}",
-        "format-icons": {
-            "urgent": "",
-            "active": "",
-            "default": ""
-        },
-        "persistent-workspaces": {
-            "*": 2
-        }
+    "cpu": {
+        "format": " 󰍛  | {usage}% ",
+        "on-click": "bash ~/.config/yusa/yuhtop.sh",
+        "class": "large-icon"
     },
     "custom/swaync": {
         "exec": "/home/yusa/.config/myth/yusa.sh",
@@ -169,6 +154,10 @@
         "on-click": "swaync-client -t",
         "on-click-right": "swaync-client -D",
         "on-click-middle": "swaync-client -C"
+    },
+    "tray": {
+        "spacing": 10,
+        "icon-size": 20
     },
     "group/myth": {
         "orientation": "inherit",
