@@ -2,15 +2,15 @@
 
 cat > ~/.config/waybar/config <<'YUSA'
 {
-  "margin-top": 10,
-  "margin-left": 10,
-  "margin-right": 10,
+  "margin-top": 5,
+  "margin-left": 7,
+  "margin-right": 9,
   "spacing": 1,
   "height": 49,
-  "position": "top",
+  "position": "left",
   "include": ["$HOME/.config/waybar/modules.json"],
-  "modules-left": ["group/yusa","tray","custom/clients"],
-  "modules-center": ["hyprland/workspaces"],
-  "modules-right": ["custom/swaync","group/hardware","group/myth","custom/power-button"]
+  "modules-left": ["auto"],
+  "modules-center": ["auto"],
+  "modules-right": ["auto"]
 }
 YUSA
