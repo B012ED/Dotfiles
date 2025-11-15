@@ -2,22 +2,22 @@
     "custom/power-button": {
         "format": "",
         "tooltip": false,
-        "on-click": "exec $HOME/.config/yusa/yupower.sh"
+        "on-click": "exec $HOME/.config/myth/yupower.sh"
     },
     "custom/clients": {
-        "exec": "bash -c 'hyprctl clients -j | jq -r \".[].class\" | sort -u | while read -r app; do case \"$app\" in app.zen_browser.zen) echo -n \" \";; spotify) echo -n \" \";; code|Code|code-oss) echo -n \" \";; kitty|Alacritty) echo -n \" \";; thunar) echo -n \" \";; chromium|chrome) echo -n \" \";; *) echo -n \" \";; esac; done; echo'",
-        "interval": 2,
+        "exec": "/home/yusa/.config/yusa/yuclient.sh",
         "format": "{}",
+        "interval": 1,
         "escape": false,
         "tooltip": false
     },
     "disk": {
         "interval": 30,
         "format": "󰋊  | {percentage_used}% ",
-        "on-click": "bash ~/.config/yusa/yuhtop.sh"
+        "on-click": "bash ~/.config/myth/yuhtop.sh"
     },
     "custom/yusa": {
-        "exec": "/home/yusa/.config/yusa/yusabi.sh",
+        "exec": "/home/yusa/.config/myth/yusabi.sh",
         "format": "{}",
         "interval": 30,
         "tooltip": false
@@ -47,7 +47,7 @@
             "",
             ""
         ],
-        "on-click": "bash ~/.config/yusa/yubtop.sh"
+        "on-click": "bash ~/.config/myth/yubtop.sh"
     },
     "pulseaudio": {
         "format": "{icon}  {volume}%",
@@ -97,7 +97,7 @@
     },
     "memory": {
         "format": " 󰓅  | {}% ",
-        "on-click": "bash ~/.config/yusa/yuhtop.sh"
+        "on-click": "bash ~/.config/myth/yuhtop.sh"
     },
     "group/hardware": {
         "orientation": "inherit",
@@ -129,27 +129,27 @@
         ]
     },
     "custom/myth": {
-        "exec": "/home/yusa/.config/yusa/yumyth.sh",
+        "exec": "/home/yusa/.config/myth/yumyth.sh",
         "format": "{}",
         "interval": 30,
         "tooltip-format": "Wallpaper",
         "tooltip": true,
-        "on-click": "~/.config/yusa/yulaunch.sh"
+        "on-click": "~/.config/myth/yulaunch.sh"
     },
     "cpu": {
         "format": " 󰍛  | {usage}% ",
-        "on-click": "bash ~/.config/yusa/yuhtop.sh",
+        "on-click": "bash ~/.config/myth/yuhtop.sh",
         "class": "large-icon"
     },
     "custom/swaync": {
-        "exec": "/home/yusa/.config/myth/yusa.sh",
+        "exec": "/home/yusa/.config/yusa/yusa.sh",
         "interval": 5,
         "format": "{}",
         "format-icons": {
             "enabled": "󰂚",
             "disabled": "󰂛",
             "none": "󰂛",
-            "dnd": "󰂛"
+            "dnd": "󰂛"      
         },
         "on-click": "swaync-client -t",
         "on-click-right": "swaync-client -D",
